@@ -37,6 +37,7 @@ dependencies:
   swipable_stack: ^2.0.0
   firebase_core: ^4.1.0
   firebase_auth: ^6.0.2
+  month_year_picker: ^0.4.0
 
 dev_dependencies:
   flutter_test:

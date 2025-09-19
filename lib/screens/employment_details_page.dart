@@ -1,35 +1,37 @@
 import 'package:flutter/material.dart';
 
-class EducationDetailsPage extends StatefulWidget {
-  const EducationDetailsPage({super.key});
+class EmploymentDetailsPage extends StatefulWidget {
+  const EmploymentDetailsPage({super.key});
 
   @override
-  State<EducationDetailsPage> createState() => _EducationDetailsPageState();
+  State<EmploymentDetailsPage> createState() => _EmploymentDetailsPageState();
 }
 
-class _EducationDetailsPageState extends State<EducationDetailsPage> {
+class _EmploymentDetailsPageState extends State<EmploymentDetailsPage> {
   final _formKey = GlobalKey<FormState>();
 
-  // List of education entries
-  List<Map<String, TextEditingController>> educationList = [
+  // List of employment entries
+  List<Map<String, TextEditingController>> employmentList = [
     {
-      "institute": TextEditingController(),
-      "degree": TextEditingController(),
-      "course": TextEditingController(),
-      "startYear": TextEditingController(),
-      "endYear": TextEditingController(),
+      "company": TextEditingController(),
+      "start": TextEditingController(),
+      "end": TextEditingController(),
+      "position": TextEditingController(),
+      "description": TextEditingController(),
+      "internship": TextEditingController(text: "No"),
     }
   ];
 
-  // Add a new degree entry
-  void _addDegree() {
+  // Add new employment entry
+  void _addEmployment() {
     setState(() {
-      educationList.add({
-        "institute": TextEditingController(),
-        "degree": TextEditingController(),
-        "course": TextEditingController(),
-        "startYear": TextEditingController(),
-        "endYear": TextEditingController(),
+      employmentList.add({
+        "company": TextEditingController(),
+        "start": TextEditingController(),
+        "end": TextEditingController(),
+        "position": TextEditingController(),
+        "description": TextEditingController(),
+        "internship": TextEditingController(text: "No"),
       });
     });
   }
@@ -37,47 +39,42 @@ class _EducationDetailsPageState extends State<EducationDetailsPage> {
   // Next button handler
   void _onNext() {
     if (_formKey.currentState!.validate()) {
-      // Collect entered data
-      List<Map<String, String>> data = educationList.map((entry) {
+      List<Map<String, String>> data = employmentList.map((entry) {
         return {
-          "institute": entry["institute"]!.text,
-          "degree": entry["degree"]!.text,
-          "course": entry["course"]!.text,
-          "startYear": entry["startYear"]!.text,
-          "endYear": entry["endYear"]!.text,
+          "company": entry["company"]!.text,
+          "start": entry["start"]!.text,
+          "end": entry["end"]!.text,
+          "position": entry["position"]!.text,
+          "description": entry["description"]!.text,
+          "internship": entry["internship"]!.text,
         };
       }).toList();
 
-      // For now just print
-      debugPrint("Education Details: $data");
+      debugPrint("Employment Details: $data");
 
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text("Proceeding to next step ✅")),
+        const SnackBar(content: Text("Employment details saved ✅")),
       );
+
+      // TODO: Navigate to next page
     }
   }
 
   Widget _buildStepper() {
     return const Row(
       children: [
-        Icon(Icons.radio_button_checked, color: const Color(0xFFFF7600)),
-        const Expanded(
-          child: Divider(thickness: 2, color: Color(0xFFFF7600)),
-        ),
-        Icon(Icons.radio_button_checked, color: const Color(0xFFFF7600)),
-        const Expanded(
-          child: Divider(thickness: 2, color: Colors.grey),
-        ),
-        const Icon(Icons.radio_button_unchecked, color: Colors.grey),
-        const Expanded(
-          child: Divider(thickness: 2, color: Colors.grey),
-        ),
-        const Icon(Icons.radio_button_unchecked, color: Colors.grey),
+        Icon(Icons.radio_button_checked, color: Color(0xFFFF7600)), // Step 1
+        Expanded(child: Divider(thickness: 2, color: Color(0xFFFF7600))),
+        Icon(Icons.radio_button_checked, color: Color(0xFFFF7600)), //step 2
+        Expanded(child: Divider(thickness: 2, color: Color(0xFFFF7600))),
+        Icon(Icons.radio_button_checked, color: Color(0xFFFF7600)), //step 3
+        Expanded(child: Divider(thickness: 2, color: Colors.grey)),
+        Icon(Icons.radio_button_unchecked, color: Colors.grey), // Step 4
       ],
     );
   }
 
-  Widget _buildEducationCard(int index) {
+  Widget _buildEmploymentCard(int index) {
     return Card(
       margin: const EdgeInsets.symmetric(vertical: 10),
       elevation: 4,
@@ -87,49 +84,38 @@ class _EducationDetailsPageState extends State<EducationDetailsPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text("Degree ${index + 1}",
+            Text("Employment ${index + 1}",
                 style:
                     const TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
             const SizedBox(height: 12),
 
-            // Institute
+            // Company Name
             TextFormField(
-              controller: educationList[index]["institute"],
+              controller: employmentList[index]["company"],
               decoration: const InputDecoration(
-                labelText: "Institute",
+                labelText: "Company Name",
                 border: OutlineInputBorder(),
               ),
               validator: (v) =>
-                  v == null || v.isEmpty ? "Please enter institute" : null,
+                  v == null || v.isEmpty ? "Please enter company name" : null,
             ),
             const SizedBox(height: 12),
 
-            // Degree
+            // Position
             TextFormField(
-              controller: educationList[index]["degree"],
+              controller: employmentList[index]["position"],
               decoration: const InputDecoration(
-                labelText: "Degree",
+                labelText: "Position",
                 border: OutlineInputBorder(),
               ),
               validator: (v) =>
-                  v == null || v.isEmpty ? "Please enter degree" : null,
+                  v == null || v.isEmpty ? "Please enter position" : null,
             ),
             const SizedBox(height: 12),
 
-            // Course
+            // Start Date (MM/YYYY)
             TextFormField(
-              controller: educationList[index]["course"],
-              decoration: const InputDecoration(
-                labelText: "Course",
-                border: OutlineInputBorder(),
-              ),
-              validator: (v) =>
-                  v == null || v.isEmpty ? "Please enter course" : null,
-            ),
-            const SizedBox(height: 12),
-            // Start Date (only show Month/Year)
-            TextFormField(
-              controller: educationList[index]["startYear"],
+              controller: employmentList[index]["start"],
               readOnly: true,
               decoration: const InputDecoration(
                 labelText: "Start (MM/YYYY)",
@@ -144,7 +130,7 @@ class _EducationDetailsPageState extends State<EducationDetailsPage> {
                 );
                 if (picked != null) {
                   setState(() {
-                    educationList[index]["startYear"]!.text =
+                    employmentList[index]["start"]!.text =
                         "${picked.month.toString().padLeft(2, '0')}/${picked.year}";
                   });
                 }
@@ -154,9 +140,9 @@ class _EducationDetailsPageState extends State<EducationDetailsPage> {
             ),
             const SizedBox(height: 12),
 
-// End Date (only show Month/Year)
+            // End Date (MM/YYYY)
             TextFormField(
-              controller: educationList[index]["endYear"],
+              controller: employmentList[index]["end"],
               readOnly: true,
               decoration: const InputDecoration(
                 labelText: "End (MM/YYYY)",
@@ -171,13 +157,45 @@ class _EducationDetailsPageState extends State<EducationDetailsPage> {
                 );
                 if (picked != null) {
                   setState(() {
-                    educationList[index]["endYear"]!.text =
+                    employmentList[index]["end"]!.text =
                         "${picked.month.toString().padLeft(2, '0')}/${picked.year}";
                   });
                 }
               },
               validator: (v) =>
                   v == null || v.isEmpty ? "Please select end date" : null,
+            ),
+            const SizedBox(height: 12),
+
+            // Description
+            TextFormField(
+              controller: employmentList[index]["description"],
+              maxLines: 3,
+              decoration: const InputDecoration(
+                labelText: "Description",
+                border: OutlineInputBorder(),
+              ),
+              validator: (v) =>
+                  v == null || v.isEmpty ? "Please enter description" : null,
+            ),
+            const SizedBox(height: 12),
+
+            // Internship Dropdown
+            DropdownButtonFormField<String>(
+              value: employmentList[index]["internship"]!.text,
+              items: const [
+                DropdownMenuItem(value: "Yes", child: Text("Yes")),
+                DropdownMenuItem(value: "No", child: Text("No")),
+              ],
+              onChanged: (val) {
+                setState(() {
+                  employmentList[index]["internship"]!.text = val!;
+                });
+              },
+              decoration: const InputDecoration(
+                labelText: "Is Internship?",
+                border: OutlineInputBorder(),
+              ),
             ),
           ],
         ),
@@ -201,7 +219,7 @@ class _EducationDetailsPageState extends State<EducationDetailsPage> {
                 const Align(
                   alignment: Alignment.centerLeft,
                   child: Text(
-                    "Education details",
+                    "Employment Details",
                     style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                   ),
                 ),
@@ -210,18 +228,18 @@ class _EducationDetailsPageState extends State<EducationDetailsPage> {
                   child: SingleChildScrollView(
                     child: Column(
                       children: [
-                        for (int i = 0; i < educationList.length; i++)
-                          _buildEducationCard(i),
+                        for (int i = 0; i < employmentList.length; i++)
+                          _buildEmploymentCard(i),
 
-                        // Add Degree Button
+                        // Add Employment Button
                         Align(
                           alignment: Alignment.centerLeft,
                           child: TextButton.icon(
-                            onPressed: _addDegree,
+                            onPressed: _addEmployment,
                             icon:
                                 const Icon(Icons.add, color: Color(0xFFFF7600)),
                             label: const Text(
-                              "Add Degree",
+                              "Add Employment",
                               style: TextStyle(color: Color(0xFFFF7600)),
                             ),
                           ),
