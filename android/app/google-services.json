@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "912994099052",
+    "project_id": "pminternconnect",
+    "storage_bucket": "pminternconnect.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:912994099052:android:5a791324e690c688ccdd49",
+        "android_client_info": {
+          "package_name": "com.example.pm_internship"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "912994099052-rh9tvrmqkcfucutgv269up98jkmkfbof.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC_NFQtipsIvFEcENGw7Bkr9XJHKPFAIOU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "912994099052-rh9tvrmqkcfucutgv269up98jkmkfbof.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
